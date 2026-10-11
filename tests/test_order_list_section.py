@@ -34,8 +34,7 @@ class TestOrdersListSection:
         orders_list_page.wait_for_load_orders_list_page()
         orders_list_page.wait_for_load_orders_list_page_header()
 
-        new_total = orders_list_page.wait_completed_orders_all_time_increase(old_total)
-        assert new_total > old_total
+        assert orders_list_page.wait_completed_orders_all_time_increase(old_total) > old_total
 
     @allure.story("Счётчики заказов")
     @allure.title('Счётчик «Выполнено за сегодня» увеличивается при создании заказа')
@@ -63,8 +62,7 @@ class TestOrdersListSection:
         orders_list_page.wait_for_load_orders_list_page()
         orders_list_page.wait_for_load_orders_list_page_header()
 
-        new_today = orders_list_page.wait_completed_orders_today_increase(old_today)
-        assert new_today > old_today
+        assert orders_list_page.wait_completed_orders_today_increase(old_today) > old_today
 
     @allure.story("Заказы в работе")
     @allure.title('Номер заказа появляется в разделе «В работе»')
@@ -91,4 +89,4 @@ class TestOrdersListSection:
         orders_list_page.wait_for_load_orders_list_page()
         orders_list_page.wait_for_load_orders_list_page_header()
 
-        orders_list_page.wait_any_order_in_progress()
+        assert orders_list_page.wait_any_order_in_progress()

@@ -1,3 +1,5 @@
+import random
+
 import allure
 import pytest
 import requests
@@ -14,18 +16,14 @@ from pages.orders_list_page import OrdersListPageObjects
 from urls import URLs
 
 
-API_URL = "https://stellarburgers.education-services.ru/api"
-
-
 def _create_user() -> dict:
     """Создаёт уникального пользователя через API."""
-    import random
     email = f"test_{random.randint(10000, 99999)}@yandex.ru"
     password = "password123"
     name = "TestUser"
 
     payload = {"email": email, "password": password, "name": name}
-    requests.post(f"{API_URL}/auth/register", json=payload)
+    requests.post(f"{URLs.API_URL}/auth/register", json=payload)
 
     return payload
 
@@ -33,12 +31,15 @@ def _create_user() -> dict:
 def _delete_user(email: str, password: str) -> None:
     """Удаляет пользователя через API."""
     login_response = requests.post(
-        f"{API_URL}/auth/login",
+        f"{URLs.API_URL}/auth/login",
         json={"email": email, "password": password},
     )
     if login_response.status_code == 200:
         token = login_response.json()["accessToken"]
-        requests.delete(f"{API_URL}/auth/user", headers={"Authorization": token})
+        requests.delete(
+            f"{URLs.API_URL}/auth/user",
+            headers={"Authorization": token},
+        )
 
 
 @pytest.fixture(scope="function", params=["chrome", "firefox"])

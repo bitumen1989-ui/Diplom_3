@@ -18,9 +18,8 @@ class TestMainFunctions:
 
         main_page.wait_for_load_orders_list_text()
         main_page.click_button_orders_list()
-        orders_list_page.wait_for_load_orders_list_page()
 
-        assert orders_list_page.get_current_url() == URLs.ORDERS_LIST_URL
+        assert orders_list_page.wait_for_load_orders_list_page() == URLs.ORDERS_LIST_URL
 
     @allure.story("Навигация")
     @allure.title("Переход по клику на «Конструктор»")
@@ -30,9 +29,8 @@ class TestMainFunctions:
         main_page = MainPageObjects(driver_orders_list_page)
 
         orders_list_page.click_button_constructor()
-        main_page.wait_for_load_main_page()
 
-        assert orders_list_page.get_current_url() == URLs.BASE_URL
+        assert main_page.wait_for_load_main_page() == URLs.BASE_URL
 
     @allure.story("Детали ингредиента")
     @allure.title("Клик по ингредиенту открывает всплывающее окно")
@@ -41,6 +39,7 @@ class TestMainFunctions:
         main_page = MainPageObjects(driver_main_page)
 
         main_page.click_ingredient_bun()
+
         assert main_page.wait_for_load_ingredient_details_main_header()
 
     @allure.story("Детали ингредиента")
@@ -66,8 +65,5 @@ class TestMainFunctions:
         old_counter = main_page.get_ingredient_counter()
 
         main_page.add_ingredients_into_constructor()
-        new_counter = main_page.wait_ingredient_counter_increase(old_counter)
 
-        # Булка в конструкторе учитывается как верх и низ,
-        # поэтому счётчик увеличивается минимум на 1.
-        assert new_counter > old_counter
+        assert main_page.wait_ingredient_counter_increase(old_counter) > old_counter

@@ -11,8 +11,10 @@ class OrdersListPageObjects(BasePageObjects):
     """Страница «Лента заказов»."""
 
     @allure.step("Ожидание загрузки страницы «Лента заказов»")
-    def wait_for_load_orders_list_page(self):
+    def wait_for_load_orders_list_page(self) -> str:
+        """Ждёт загрузки страницы и возвращает текущий URL."""
         self.wait_load_url(URLs.ORDERS_LIST_URL)
+        return self.get_current_url()
 
     @allure.step("Ожидание заголовка страницы «Лента заказов»")
     def wait_for_load_orders_list_page_header(self):

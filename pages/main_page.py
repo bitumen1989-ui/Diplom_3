@@ -9,8 +9,10 @@ class MainPageObjects(BasePageObjects):
     """Главная страница (конструктор)."""
 
     @allure.step("Ожидание загрузки главной страницы")
-    def wait_for_load_main_page(self):
+    def wait_for_load_main_page(self) -> str:
+        """Ждёт загрузки главной страницы и возвращает текущий URL."""
         self.wait_load_url(URLs.BASE_URL)
+        return self.get_current_url()
 
     @allure.step("Ожидание загрузки кнопки «Лента Заказов»")
     def wait_for_load_orders_list_text(self):
